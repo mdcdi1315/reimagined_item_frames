@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "reimagined_item_frames:item/glassed_item_frame"
+	}
+}

@@ -1,0 +1,7 @@
+{
+	"parent": "reimagined_item_frames:entity/template_item_frame",
+	"textures": {
+		"particle": "minecraft:block/birch_planks",
+		"back": "reimagined_item_frames:reimagined_item_frames_entities/item_frame"
+	}
+}

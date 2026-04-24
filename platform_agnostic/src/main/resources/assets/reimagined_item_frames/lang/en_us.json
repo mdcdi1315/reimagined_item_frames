@@ -1,0 +1,19 @@
+{
+	"entity.reimagined_item_frames.simple_item_frame": "Simple Item Frame",
+	"entity.reimagined_item_frames.advanced_item_frame": "Advanced Item Frame",
+	"entity.reimagined_item_frames.glassed_simple_item_frame": "Simple Item Frame (Glassed!)",
+	"entity.reimagined_item_frames.simple_invisible_item_frame": "Simple Invisible Item Frame",
+	"entity.reimagined_item_frames.glassed_advanced_item_frame": "Advanced Item Frame (Glassed!)",
+	"entity.reimagined_item_frames.advanced_invisible_item_frame": "Advanced Invisible Item Frame",
+
+	"item.reimagined_item_frames.simple_item_frame": "Simple Item Frame",
+	"item.reimagined_item_frames.advanced_item_frame": "Advanced Item Frame",
+	"item.reimagined_item_frames.glassed_simple_item_frame": "Simple Item Frame (Glassed!)",
+	"item.reimagined_item_frames.simple_invisible_item_frame": "Simple Invisible Item Frame",
+	"item.reimagined_item_frames.glassed_advanced_item_frame": "Advanced Item Frame (Glassed!)",
+	"item.reimagined_item_frames.advanced_invisible_item_frame": "Advanced Invisible Item Frame",
+
+	"gui.reimagined_item_frames.rotation_value_slider_control.message": "Rotation: %d degrees",
+	"gui.reimagined_item_frames.item_display_scale_slider_control.message": "Item Display Scale: %d %%",
+	"gui.reimagined_item_frames.desired_light_level_slider_control.message": "Desired Light Level: %d"
+}

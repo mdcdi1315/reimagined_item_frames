@@ -1,0 +1,9 @@
+{
+	"sources": [
+		{
+			"type": "directory",
+			"source": "reimagined_item_frames_entities",
+			"prefix": "reimagined_item_frames_entities/"
+		}
+	]
+}

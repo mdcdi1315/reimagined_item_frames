@@ -1,0 +1,12 @@
+{
+	"values": [
+		"minecraft:item_frame",
+		"minecraft:glow_item_frame",
+		"reimagined_item_frames:simple_invisible_item_frame",
+		"reimagined_item_frames:advanced_invisible_item_frame",
+		"reimagined_item_frames:simple_item_frame",
+		"reimagined_item_frames:advanced_item_frame",
+		"reimagined_item_frames:glassed_simple_item_frame",
+		"reimagined_item_frames:glassed_advanced_item_frame"
+	]
+}

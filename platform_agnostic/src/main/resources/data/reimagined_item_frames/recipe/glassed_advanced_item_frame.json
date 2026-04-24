@@ -1,0 +1,28 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"category": "misc",
+	"ingredients": [
+		{
+			"item": "reimagined_item_frames:advanced_item_frame"
+		},
+		{
+			"item": "minecraft:glass"
+		},
+		{
+			"item": "minecraft:glass"
+		},
+		{
+			"item": "minecraft:glass"
+		},
+		{
+			"item": "minecraft:glass"
+		},
+		{
+			"item": "minecraft:glass"
+		}
+	],
+	"result": {
+		"count": 1,
+		"id": "reimagined_item_frames:glassed_advanced_item_frame"
+	}
+}
