@@ -20,9 +20,10 @@ public final class ModStaticDefinitionsBuilder
 
     public record Event(Action2<ResourceLocation, StateDefinition<Block, BlockState>> register) implements IDestroyableEvent { }
 
-    public static void Initialize(EventManager manager)
+    public static void InitializeEarly(EventManager manager) { manager.AddEvent(Event.class); }
+
+    public static void AddDefaultEventListener(EventManager manager)
     {
-        manager.AddEvent(Event.class);
         manager.AddEventListener(Event.class, ModStaticDefinitionsBuilder::InitializeDefinitions);
     }
 
@@ -45,5 +46,6 @@ public final class ModStaticDefinitionsBuilder
                 RegistryUtils.ConstructResourceLocation(ServerModInstance.MOD_ID, "glassed_advanced_item_frame"),
                 definition
         );
+        ServerModInstance.LOGGER.info("Successfully initialized static definitions for the custom item frames!");
     }
 }

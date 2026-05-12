@@ -46,6 +46,9 @@ public abstract class AbstractItemFrameMenu
         container = new SimpleContainer(1);
         this.entity_reference = entity_reference;
 
+        container.setItem(0, entity_reference.getItem());
+        this.addSlot(new Slot(container, 0, RENDERED_ITEM_X_POINT, RENDERED_ITEM_Y_POINT));
+
         for (int x = 0; x < 3; ++x) {
             for (int y = 0; y < 9; ++y) {
                 this.addSlot(new Slot(player_inventory, y + x * 9 + 9, INVENTORY_X_POINT + y * 18, INVENTORY_Y_POINT + x * 18));
@@ -55,9 +58,6 @@ public abstract class AbstractItemFrameMenu
         for (int hs = 0; hs < 9; ++hs) {
             this.addSlot(new Slot(player_inventory, hs, INVENTORY_X_POINT + hs * 18, INVENTORY_Y_HOTBAR_POINT));
         }
-
-        container.setItem(0, entity_reference.getItem());
-        this.addSlot(new Slot(container, 0, RENDERED_ITEM_X_POINT, RENDERED_ITEM_Y_POINT));
     }
 
     public AbstractItemFrameMenu(@AllowNull MenuType<? extends AbstractItemFrameMenu> menuType, int containerId, Inventory player_inventory)  { this(menuType, containerId, player_inventory, (FriendlyByteBuf) null); }
@@ -68,6 +68,8 @@ public abstract class AbstractItemFrameMenu
         this.entity_reference = null;
         container = new SimpleContainer(1);
 
+        this.addSlot(new Slot(container, 0, RENDERED_ITEM_X_POINT, RENDERED_ITEM_Y_POINT));
+
         for (int x = 0; x < 3; ++x) {
             for (int y = 0; y < 9; ++y) {
                 this.addSlot(new Slot(player_inventory, y + x * 9 + 9, INVENTORY_X_POINT + y * 18, INVENTORY_Y_POINT + x * 18));
@@ -77,8 +79,6 @@ public abstract class AbstractItemFrameMenu
         for (int hs = 0; hs < 9; ++hs) {
             this.addSlot(new Slot(player_inventory, hs, INVENTORY_X_POINT + hs * 18, INVENTORY_Y_HOTBAR_POINT));
         }
-
-        this.addSlot(new Slot(container, 0, RENDERED_ITEM_X_POINT, RENDERED_ITEM_Y_POINT));
 
         if (buffer != null) { client_entity_id = buffer.readIntLE(); }
     }

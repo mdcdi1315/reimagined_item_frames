@@ -15,5 +15,7 @@
 
 	"gui.reimagined_item_frames.rotation_value_slider_control.message": "Rotation: %d degrees",
 	"gui.reimagined_item_frames.item_display_scale_slider_control.message": "Item Display Scale: %d %%",
-	"gui.reimagined_item_frames.desired_light_level_slider_control.message": "Desired Light Level: %d"
+	"gui.reimagined_item_frames.desired_light_level_slider_control.message": "Desired Light Level: %d",
+
+	"creative_mode_tab.reimagined_item_frames": "Reimagined Item Frames"
 }

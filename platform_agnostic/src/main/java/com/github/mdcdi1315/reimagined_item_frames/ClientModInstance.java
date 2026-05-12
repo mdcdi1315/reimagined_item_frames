@@ -1,5 +1,6 @@
 package com.github.mdcdi1315.reimagined_item_frames;
 
+import com.github.mdcdi1315.basemodslib.BaseModsLib;
 import com.github.mdcdi1315.basemodslib.eventapi.EventManager;
 import com.github.mdcdi1315.basemodslib.mods.IClientModInstance;
 import com.github.mdcdi1315.basemodslib.client.IMenuScreensRegistrar;
@@ -16,6 +17,14 @@ import com.github.mdcdi1315.reimagined_item_frames.entity.Entities;
 public final class ClientModInstance
     implements IClientModInstance
 {
+    @Override
+    public void Initialize()
+    {
+        synchronized (BaseModsLib.class) {
+            ModStaticDefinitionsBuilder.InitializeEarly(BaseModsLib.GetEventsManager());
+        }
+    }
+
     @Override
     public void RegisterEntityRenderers(IEntityRendererRegistrar registrar)
     {
@@ -35,7 +44,7 @@ public final class ClientModInstance
     }
 
     @Override
-    public void RegisterEvents(EventManager manager) { ModStaticDefinitionsBuilder.Initialize(manager); }
+    public void RegisterEvents(EventManager manager) { ModStaticDefinitionsBuilder.AddDefaultEventListener(manager); }
 
     @Override
     public void Dispose() { }

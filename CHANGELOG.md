@@ -1,6 +1,9 @@
-## Releasing Release Candidate 1:
+## Releasing Release Candidate 2:
 
--> Initial version and files of the mod.
+-> Added a creative mode tab!
 
-It is currently known a classloading issue with the block state model loader in Fabric - if you find it, relaunch your game.
-You will know about it when loading screen has stuck.
+-> Proposing a fix for the early loading issue on Fabric that cause it to indefinitely hang the game.
+
+-> Fixed the quick stack feature that was misplacing the display item back to the player's inventory.
+
+-> Updated the mod to use BML 1.0.32 .

@@ -18,23 +18,30 @@ public final class Items
 
     public static void Initialize(IItemRegistrar registrar)
     {
-        registrar.Register("simple_invisible_item_frame", new ItemRegistrationInformation(
-                (rl) -> SIMPLE_INVISIBLE_ITEM_FRAME = new SimpleInvisibleItemFrameItem(CreateProperties())
-        ));
-        registrar.Register("advanced_invisible_item_frame", new ItemRegistrationInformation(
-                (rl) -> ADVANCED_INVISIBLE_ITEM_FRAME = new AdvancedInvisibleItemFrameItem(CreateProperties())
-        ));
+        CreativeModeTabs.Initialize(registrar);
         registrar.Register("simple_item_frame", new ItemRegistrationInformation(
-                (rl) -> SIMPLE_ITEM_FRAME = new SimpleItemFrameItem(CreateProperties())
+                (rl) -> SIMPLE_ITEM_FRAME = new SimpleItemFrameItem(CreateProperties()),
+                CreativeModeTabs.REIMAGINED_ITEM_FRAMES
         ));
-        registrar.Register("advanced_item_frame", new ItemRegistrationInformation(
-                (rl) -> ADVANCED_ITEM_FRAME = new AdvancedItemFrameItem(CreateProperties())
+        registrar.Register("simple_invisible_item_frame", new ItemRegistrationInformation(
+                (rl) -> SIMPLE_INVISIBLE_ITEM_FRAME = new SimpleInvisibleItemFrameItem(CreateProperties()),
+                CreativeModeTabs.REIMAGINED_ITEM_FRAMES
         ));
         registrar.Register("glassed_simple_item_frame", new ItemRegistrationInformation(
-                (rl) -> GLASSED_SIMPLE_ITEM_FRAME = new GlassedSimpleItemFrameItem(CreateProperties())
+                (rl) -> GLASSED_SIMPLE_ITEM_FRAME = new GlassedSimpleItemFrameItem(CreateProperties()),
+                CreativeModeTabs.REIMAGINED_ITEM_FRAMES
+        ));
+        registrar.Register("advanced_item_frame", new ItemRegistrationInformation(
+                (rl) -> ADVANCED_ITEM_FRAME = new AdvancedItemFrameItem(CreateProperties()),
+                CreativeModeTabs.REIMAGINED_ITEM_FRAMES
+        ));
+        registrar.Register("advanced_invisible_item_frame", new ItemRegistrationInformation(
+                (rl) -> ADVANCED_INVISIBLE_ITEM_FRAME = new AdvancedInvisibleItemFrameItem(CreateProperties()),
+                CreativeModeTabs.REIMAGINED_ITEM_FRAMES
         ));
         registrar.Register("glassed_advanced_item_frame", new ItemRegistrationInformation(
-                (rl) -> GLASSED_ADVANCED_ITEM_FRAME = new GlassedAdvancedItemFrameItem(CreateProperties())
+                (rl) -> GLASSED_ADVANCED_ITEM_FRAME = new GlassedAdvancedItemFrameItem(CreateProperties()),
+                CreativeModeTabs.REIMAGINED_ITEM_FRAMES
         ));
     }
 

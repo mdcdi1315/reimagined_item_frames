@@ -27,6 +27,7 @@ public final class ServerModInstance
     public void Initialize()
     {
         LOGGER = LoggerFactory.getLogger("Reimagined Item Frames Mod");
+        LOGGER.info("Now initializing Reimagined Item Frames mod!");
         EntityTags.Initialize();
     }
 
@@ -43,10 +44,10 @@ public final class ServerModInstance
     public void RegisterItems(IItemRegistrar registrar) { Items.Initialize(registrar); }
 
     @Override
-    public void RegisterMenuTypes(IMenuTypeRegistrar registrar) { Menus.Initialize(registrar); }
+    public void InitializeNetwork(NetworkManager manager) { Networking.Initialize(manager); }
 
     @Override
-    public void InitializeNetwork(NetworkManager manager) { Networking.Initialize(manager); }
+    public void RegisterMenuTypes(IMenuTypeRegistrar registrar) { Menus.Initialize(registrar); }
 
     @Override
     public String GetModId() { return MOD_ID; }
