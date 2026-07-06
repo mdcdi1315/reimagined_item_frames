@@ -1,8 +1,8 @@
 package com.github.mdcdi1315.reimagined_item_frames.mixin;
 
-import com.github.mdcdi1315.basemodslib.BaseModsLib;
 import com.github.mdcdi1315.basemodslib.ClientOnlyEnvironment;
 
+import com.github.mdcdi1315.basemodslib.eventapi.EventManager;
 import com.github.mdcdi1315.reimagined_item_frames.client.ModStaticDefinitionsBuilder;
 
 import net.minecraft.world.level.block.Block;
@@ -38,7 +38,7 @@ public abstract class BlockStateModelLoaderMixin
     private static void OnStaticInitEnd(CallbackInfo ci)
     {
         HashMap<ResourceLocation, StateDefinition<Block, BlockState>> map = new HashMap<>(GetStaticDefinitions());
-        BaseModsLib.GetEventsManager().FireEvent(new ModStaticDefinitionsBuilder.Event(map::put));
+        EventManager.FireEventSafe(new ModStaticDefinitionsBuilder.Event(map::put));
         SetStaticDefinitions(map);
     }
 }

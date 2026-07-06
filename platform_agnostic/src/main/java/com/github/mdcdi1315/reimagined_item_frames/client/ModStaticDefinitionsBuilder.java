@@ -4,7 +4,7 @@ import com.github.mdcdi1315.DotNetLayer.System.Action2;
 
 import com.github.mdcdi1315.basemodslib.eventapi.EventManager;
 import com.github.mdcdi1315.basemodslib.registries.RegistryUtils;
-import com.github.mdcdi1315.basemodslib.eventapi.IDestroyableEvent;
+import com.github.mdcdi1315.basemodslib.eventapi.IDestroyedOnUseEvent;
 
 import com.github.mdcdi1315.reimagined_item_frames.ServerModInstance;
 
@@ -18,12 +18,11 @@ public final class ModStaticDefinitionsBuilder
 {
     private ModStaticDefinitionsBuilder() {}
 
-    public record Event(Action2<ResourceLocation, StateDefinition<Block, BlockState>> register) implements IDestroyableEvent { }
+    public record Event(Action2<ResourceLocation, StateDefinition<Block, BlockState>> register) implements IDestroyedOnUseEvent { }
 
-    public static void InitializeEarly(EventManager manager) { manager.AddEvent(Event.class); }
-
-    public static void AddDefaultEventListener(EventManager manager)
+    public static void Initialize(EventManager manager)
     {
+        manager.AddEvent(Event.class);
         manager.AddEventListener(Event.class, ModStaticDefinitionsBuilder::InitializeDefinitions);
     }
 

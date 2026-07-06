@@ -1,9 +1,7 @@
-## Releasing Release Candidate 2:
+## Releasing Release Candidate 3:
 
--> Added a creative mode tab!
+-> Optimized the item frame rendering code, commonized the code where possible. 
 
--> Proposing a fix for the early loading issue on Fabric that cause it to indefinitely hang the game.
+-> Fixed the early loading issue on Fabric that caused it to indefinitely hang the game.
 
--> Fixed the quick stack feature that was misplacing the display item back to the player's inventory.
-
--> Updated the mod to use BML 1.0.32 .
+-> Updated the mod to use BML 1.0.36 .

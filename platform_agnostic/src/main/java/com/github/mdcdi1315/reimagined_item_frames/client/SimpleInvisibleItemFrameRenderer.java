@@ -21,25 +21,6 @@ public final class SimpleInvisibleItemFrameRenderer
     @Override
     protected void RenderAdditional(SimpleInvisibleItemFrameEntity entity, float entity_yaw, float partial_ticks, PoseStack pose_stack, MultiBufferSource buffer, int packed_light)
     {
-        ItemStack itemstack = entity.getItem();
-
-        if (!itemstack.isEmpty())
-        {
-            MapId mapid = entity.getFramedMapId(itemstack);
-            pose_stack.translate(0.0F, 0.0F, 0.5F);
-            pose_stack.mulPose(Axis.ZP.rotationDegrees(entity.getRotation()));
-            if (mapid != null) {
-                pose_stack.mulPose(Axis.ZP.rotationDegrees(180.0F));
-                pose_stack.scale(0.0078125F, 0.0078125F, 0.0078125F);
-                pose_stack.translate(-64.0F, -64.0F, 0.0F);
-                pose_stack.translate(0.0F, 0.0F, -1.0F);
-                MapItemSavedData mapitemsaveddata = MapItem.getSavedData(mapid, entity.level());
-                if (mapitemsaveddata != null) {
-                    Minecraft.getInstance().gameRenderer.getMapRenderer().render(pose_stack, buffer, mapid, mapitemsaveddata, true, packed_light);
-                }
-            } else {
-                RenderItemStackToFrame(entity, 0.5f, itemstack, pose_stack, buffer, packed_light);
-            }
-        }
+        RenderItem(entity, 1f, pose_stack, buffer, packed_light);
     }
 }

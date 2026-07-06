@@ -22,28 +22,7 @@ public final class AdvancedInvisibleItemFrameRenderer
     @Override
     protected void RenderAdditional(AdvancedInvisibleItemFrameEntity entity, float entity_yaw, float partial_ticks, PoseStack pose_stack, MultiBufferSource buffer, int packed_light)
     {
-        ItemStack itemstack = entity.getItem();
-
-        if (!itemstack.isEmpty())
-        {
-            MapId mapid = entity.getFramedMapId(itemstack);
-            float display_scale = entity.GetItemDisplayScale() / 100f;
-            pose_stack.translate(0.0F, 0.0F, 0.5F);
-            pose_stack.mulPose(Axis.ZP.rotationDegrees(entity.getRotation()));
-            if (mapid != null) {
-                pose_stack.mulPose(Axis.ZP.rotationDegrees(180.0F));
-                display_scale *= 0.0078125F;
-                pose_stack.scale(display_scale, display_scale, display_scale);
-                pose_stack.translate(-64.0F, -64.0F, 0.0F);
-                pose_stack.translate(0.0F, 0.0F, -1.0F);
-                MapItemSavedData mapitemsaveddata = MapItem.getSavedData(mapid, entity.level());
-                if (mapitemsaveddata != null) {
-                    Minecraft.getInstance().gameRenderer.getMapRenderer().render(pose_stack, buffer, mapid, mapitemsaveddata, true, packed_light);
-                }
-            } else {
-                RenderItemStackToFrame(entity, display_scale, itemstack, pose_stack, buffer, packed_light);
-            }
-        }
+        RenderItem(entity, entity.GetItemDisplayScale() / 100f, pose_stack, buffer, packed_light);
     }
 
     @Override
