@@ -80,25 +80,23 @@ public abstract class AbstractDerivedItemFrameRenderer<TE extends AbstractBaseIt
             int packed_light
     ) {
         ItemStack item_stack = entity.getItem();
-        if (!item_stack.isEmpty())
-        {
-            MapId mapid = entity.getFramedMapId(item_stack);
-            pose_stack.translate(0.0F, 0.0F, 0.5F);
-            if (mapid == null) {
-                pose_stack.mulPose(Axis.ZP.rotationDegrees(entity.getRotation()));
+        if (item_stack.isEmpty()) { return; }
+        MapId mapid = entity.getFramedMapId(item_stack);
+        pose_stack.translate(0.0F, 0.0F, 0.5F);
+        if (mapid == null) {
+            pose_stack.mulPose(Axis.ZP.rotationDegrees(entity.getRotation()));
+            pose_stack.scale(display_scale, display_scale, display_scale);
+            this.item_renderer.renderStatic(item_stack, ItemDisplayContext.FIXED, packed_light, OverlayTexture.NO_OVERLAY, pose_stack, buffer, entity.level(), entity.getId());
+        } else {
+            MapItemSavedData mapitemsaveddata = MapItem.getSavedData(mapid, entity.level());
+            if (mapitemsaveddata != null)
+            {
+                pose_stack.mulPose(Axis.ZP.rotationDegrees(180.0F));
+                display_scale *= 0.0078125F;
                 pose_stack.scale(display_scale, display_scale, display_scale);
-                this.item_renderer.renderStatic(item_stack, ItemDisplayContext.FIXED, packed_light, OverlayTexture.NO_OVERLAY, pose_stack, buffer, entity.level(), entity.getId());
-            } else {
-                MapItemSavedData mapitemsaveddata = MapItem.getSavedData(mapid, entity.level());
-                if (mapitemsaveddata != null)
-                {
-                    pose_stack.mulPose(Axis.ZP.rotationDegrees(180.0F));
-                    display_scale *= 0.0078125F;
-                    pose_stack.scale(display_scale, display_scale, display_scale);
-                    pose_stack.translate(-64.0F, -64.0F, -1.0F);
-                    // pose_stack.translate(0.0F, 0.0F, -1.0F);
-                    Minecraft.getInstance().gameRenderer.getMapRenderer().render(pose_stack, buffer, mapid, mapitemsaveddata, true, packed_light);
-                }
+                pose_stack.translate(-64.0F, -64.0F, -1.0F);
+                // pose_stack.translate(0.0F, 0.0F, -1.0F);
+                Minecraft.getInstance().gameRenderer.getMapRenderer().render(pose_stack, buffer, mapid, mapitemsaveddata, true, packed_light);
             }
         }
     }

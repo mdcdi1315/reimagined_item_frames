@@ -5,12 +5,10 @@ import com.github.mdcdi1315.reimagined_item_frames.menu.AbstractItemFrameMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.client.gui.screens.inventory.MenuAccess;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 
 public abstract class AbstractItemFrameMenuScreen<T extends AbstractItemFrameMenu>
     extends AbstractContainerScreen<T>
-    implements MenuAccess<T>
 {
     private int display_item_component_width;
     private Component display_item_component;

@@ -101,8 +101,10 @@ public abstract class AbstractItemFrameMenu
         super.removed(player);
     }
 
-    public Component GetDisplayItemComponent() {
-        return Component.literal("Item To Display");
+    @NotNull
+    public Component GetDisplayItemComponent()
+    {
+        return Component.translatable("gui.reimagined_item_frames.item_to_display_text");
     }
 
     @Override

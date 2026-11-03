@@ -1,7 +1,9 @@
 package com.github.mdcdi1315.reimagined_item_frames.entity;
 
+import com.github.mdcdi1315.DotNetLayer.System.Diagnostics.CodeAnalysis.NotNull;
 import com.github.mdcdi1315.DotNetLayer.System.Diagnostics.CodeAnalysis.MaybeNull;
 
+import com.github.mdcdi1315.basemodslib.world.NBTUtils;
 import com.github.mdcdi1315.basemodslib.menu.MenuProviderEx;
 
 import com.github.mdcdi1315.reimagined_item_frames.ServerModInstance;
@@ -27,6 +29,8 @@ import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 
+import java.util.Optional;
+
 // Provides the essential tools to program a new item frame entity.
 // From this abstraction all custom item frame entities are inheriting from.
 public abstract class AbstractBaseItemFrameEntity
@@ -37,6 +41,7 @@ public abstract class AbstractBaseItemFrameEntity
 
     protected AbstractBaseItemFrameEntity(EntityType<? extends ItemFrame> entityType, Level level, BlockPos pos, Direction direction) { super(entityType, level, pos, direction); }
 
+    @NotNull
     @Override
     protected abstract ItemStack getFrameItemStack();
 
@@ -93,8 +98,9 @@ public abstract class AbstractBaseItemFrameEntity
         compound.putInt("TileY", blockpos.getY());
         compound.putInt("TileZ", blockpos.getZ());
 
-        if (!this.getItem().isEmpty()) {
-            compound.put("item", this.getItem().save(this.registryAccess()));
+        var i = getItem();
+        if (!i.isEmpty()) {
+            compound.put("item", i.save(this.registryAccess()));
             compound.putShort("item_rot", (short) this.getRotation());
             compound.putFloat("item_dc", ((ItemFrameDataAccessor)this).GetDropChance());
         }
@@ -114,23 +120,24 @@ public abstract class AbstractBaseItemFrameEntity
         }
 
         ItemStack itemstack;
-        if (compound.contains("item", 10)) {
-            CompoundTag compoundtag = compound.getCompound("item");
-            itemstack = ItemStack.parse(this.registryAccess(), compoundtag).orElse(ItemStack.EMPTY);
+        Optional<CompoundTag> compoundtag = NBTUtils.GetCompound(compound,"item");
+        if (compoundtag.isPresent()) {
+            itemstack = ItemStack.parse(this.registryAccess(), compoundtag.get()).orElse(ItemStack.EMPTY);
         } else {
             itemstack = ItemStack.EMPTY;
         }
 
         ItemStack itemstack1 = this.getItem();
-        if (!itemstack1.isEmpty() && !ItemStack.matches(itemstack, itemstack1)) {
+        if (!(itemstack1.isEmpty() || ItemStack.matches(itemstack, itemstack1))) {
             this.removeFramedMap(itemstack1);
         }
 
         this.setItem(itemstack, false);
         if (!itemstack.isEmpty()) {
             this.SetRotation(compound.getShort("item_rot"), false);
-            if (compound.contains("item_dc", 99)) {
-                ((ItemFrameDataAccessor)this).SetDropChance(compound.getFloat("item_dc"));
+            Optional<Float> f = NBTUtils.GetFloat(compound, "item_dc");
+            if (f.isPresent()) {
+                ((ItemFrameDataAccessor)this).SetDropChance(f.get());
             }
         }
 
