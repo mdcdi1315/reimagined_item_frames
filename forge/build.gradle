@@ -84,19 +84,6 @@ dependencies {
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
 }
 
-processResources {
-    doFirst {
-        File refmapping_file = file("build/tmp/compileJava/${refmapfilename}");
-        if (refmapping_file.exists()) {
-            String work_dir = "build/tmp/build_working";
-            Directory dir = project.layout.projectDirectory.dir(work_dir);
-            dir.getAsFile().mkdir();
-            Files.copy(refmapping_file.toPath() , dir.file(refmapfilename).getAsFile().toPath() , StandardCopyOption.REPLACE_EXISTING);
-            sourceSets.main.resources.srcDir(work_dir);
-        }
-    }
-}
-
 jar {
     manifest.attributes([
             "MixinConfigs": "${mod_id}.mixins.json,${mod_id}.forge.mixins.json"
@@ -119,6 +106,7 @@ tasks.register('curseforge', TaskPublishCurseForge) {
     project.minecraft_versions.split(',').toList().each { mainFile.addGameVersion(it) }
     mainFile.releaseType = curseforge_release_type
     mainFile.addModLoader("Forge")
+    mainFile.addEnvironment("Client", "Server")
 }
 
 modrinth {
