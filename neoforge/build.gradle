@@ -19,11 +19,6 @@ neoForge {
         accessTransformers.add(at.absolutePath)
     }
 
-    parchment {
-        minecraftVersion = parchment_minecraft
-        mappingsVersion = parchment_version
-    }
-
     runs {
         configureEach {
             systemProperty('neoforge.enabledGameTestNamespaces', mod_id)
@@ -32,10 +27,14 @@ neoForge {
 
         client {
             client()
+
+            gameDirectory = file("runs/client")
         }
 
         server {
             server()
+
+            gameDirectory = file("runs/server")
         }
     }
 

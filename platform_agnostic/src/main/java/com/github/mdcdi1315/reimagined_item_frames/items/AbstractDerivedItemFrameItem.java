@@ -10,8 +10,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemFrameItem;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.gameevent.GameEvent;
 
@@ -39,7 +37,7 @@ public abstract class AbstractDerivedItemFrameItem
             EntityType.createDefaultStackConfig(level, itemstack, player).accept(entity);
 
             if (entity.survives()) {
-                if (!level.isClientSide) {
+                if (!level.isClientSide()) {
                     entity.playPlacementSound();
                     level.gameEvent(player, GameEvent.ENTITY_PLACE, entity.position());
                     level.addFreshEntity(entity);

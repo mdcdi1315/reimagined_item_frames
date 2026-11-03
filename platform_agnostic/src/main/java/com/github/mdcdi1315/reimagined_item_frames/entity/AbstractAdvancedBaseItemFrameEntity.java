@@ -1,20 +1,17 @@
 package com.github.mdcdi1315.reimagined_item_frames.entity;
 
-import com.github.mdcdi1315.basemodslib.world.NBTUtils;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
-
-import java.util.Optional;
 
 public abstract class AbstractAdvancedBaseItemFrameEntity
     extends AbstractBaseItemFrameEntity
@@ -52,19 +49,19 @@ public abstract class AbstractAdvancedBaseItemFrameEntity
 
     public void SetItemDisplayScale(byte value) { getEntityData().set(ITEM_DISPLAY_SCALE, value); }
 
-    public void readAdditionalSaveData(CompoundTag compound)
+    @Override
+    protected void readAdditionalSaveData(ValueInput input)
     {
-        super.readAdditionalSaveData(compound);
-        Optional<Byte> o = NBTUtils.GetByte(compound, "light_level");
-        this.SetDesiredLightLevel(o.isPresent() ? o.get() : 0);
-        o = NBTUtils.GetByte(compound, "item_display_scale");
-        this.SetItemDisplayScale(o.isPresent() ? o.get() : 50);
+        super.readAdditionalSaveData(input);
+        this.SetDesiredLightLevel(input.getByteOr("light_level", (byte)0));
+        this.SetItemDisplayScale(input.getByteOr("item_display_scale", (byte)50));
     }
 
-    public void addAdditionalSaveData(CompoundTag compound)
+    @Override
+    protected void addAdditionalSaveData(ValueOutput output)
     {
-        super.addAdditionalSaveData(compound);
-        compound.putByte("light_level", this.GetDesiredLightLevel());
-        compound.putByte("item_display_scale", this.GetItemDisplayScale());
+        super.addAdditionalSaveData(output);
+        output.putByte("light_level", this.GetDesiredLightLevel());
+        output.putByte("item_display_scale", this.GetItemDisplayScale());
     }
 }

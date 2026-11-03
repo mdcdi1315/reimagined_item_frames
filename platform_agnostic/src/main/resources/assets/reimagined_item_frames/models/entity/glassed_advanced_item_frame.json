@@ -1,7 +1,13 @@
 {
 	"parent": "reimagined_item_frames:entity/template_item_frame",
 	"textures": {
-		"particle": "minecraft:block/glass",
-		"back": "minecraft:block/glass"
+		"particle": {
+			"force_translucent": true,
+			"sprite": "minecraft:block/glass"
+		},
+		"back": {
+			"force_translucent": true,
+			"sprite": "minecraft:block/glass"
+		}
 	}
 }

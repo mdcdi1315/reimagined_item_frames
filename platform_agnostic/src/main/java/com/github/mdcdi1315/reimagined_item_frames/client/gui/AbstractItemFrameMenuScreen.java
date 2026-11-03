@@ -2,10 +2,12 @@ package com.github.mdcdi1315.reimagined_item_frames.client.gui;
 
 import com.github.mdcdi1315.reimagined_item_frames.menu.AbstractItemFrameMenu;
 
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.client.renderer.RenderType;
+
 import net.minecraft.world.entity.player.Inventory;
+
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 
 public abstract class AbstractItemFrameMenuScreen<T extends AbstractItemFrameMenu>
@@ -18,13 +20,17 @@ public abstract class AbstractItemFrameMenuScreen<T extends AbstractItemFrameMen
 
     public AbstractItemFrameMenuScreen(T menu, Inventory playerInventory, Component title)
     {
-        super(menu, playerInventory, title);
+        super(
+                menu,
+                playerInventory,
+                title,
+                AbstractItemFrameMenu.TEX_X_SIZE,
+                AbstractItemFrameMenu.ACTUAL_TEX_Y_SIZE
+        );
         titleLabelX = 7;
         titleLabelY = 4;
         inventoryLabelX = 11;
         inventoryLabelY = 17;
-        imageWidth = AbstractItemFrameMenu.TEX_X_SIZE;
-        imageHeight = AbstractItemFrameMenu.ACTUAL_TEX_Y_SIZE;
     }
 
     @Override
@@ -36,17 +42,18 @@ public abstract class AbstractItemFrameMenuScreen<T extends AbstractItemFrameMen
     }
 
     @Override
-    public void render(GuiGraphics gc, int mouse_x, int mouse_y, float partial_tick)
+    public void extractRenderState(GuiGraphicsExtractor gc, int mouse_x, int mouse_y, float partial_tick)
     {
-        super.render(gc, mouse_x, mouse_y, partial_tick);
-        this.renderTooltip(gc, mouse_x, mouse_y);
+        super.extractRenderState(gc, mouse_x, mouse_y, partial_tick);
+        this.extractTooltip(gc, mouse_x, mouse_y);
     }
 
     @Override
-    protected void renderBg(GuiGraphics gc, float partial_tick, int mouse_x, int mouse_y)
+    public void extractBackground(GuiGraphicsExtractor gc, int mouse_x, int mouse_y, float partial_tick)
     {
+        this.extractTransparentBackground(gc);
         gc.blit(
-                RenderType::guiTextured,
+                RenderPipelines.GUI_TEXTURED,
                 AbstractItemFrameMenu.MENU_TEXTURE,
                 leftPos,
                 topPos,
@@ -60,9 +67,9 @@ public abstract class AbstractItemFrameMenuScreen<T extends AbstractItemFrameMen
     }
 
     @Override
-    protected void renderLabels(GuiGraphics gc, int mouse_x, int mouse_y)
+    protected void extractLabels(GuiGraphicsExtractor gc, int xm, int ym)
     {
-        super.renderLabels(gc, mouse_x, mouse_y);
-        gc.drawString(font, display_item_component, (AbstractItemFrameMenu.RENDERED_ITEM_X_POINT + 10) - (display_item_component_width / 2), AbstractItemFrameMenu.RENDERED_ITEM_Y_POINT + 22, 0xFF404040, false);
+        super.extractLabels(gc, xm, ym);
+        gc.text(font, display_item_component, (AbstractItemFrameMenu.RENDERED_ITEM_X_POINT + 10) - (display_item_component_width / 2), AbstractItemFrameMenu.RENDERED_ITEM_Y_POINT + 22, 0xFF404040, false);
     }
 }

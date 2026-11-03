@@ -6,9 +6,10 @@ import com.github.mdcdi1315.basemodslib.eventapi.EventManager;
 import com.github.mdcdi1315.reimagined_item_frames.client.ModStaticDefinitionsBuilder;
 
 import net.minecraft.world.level.block.Block;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+
+import net.minecraft.resources.Identifier;
 import net.minecraft.client.resources.model.BlockStateDefinitions;
 
 import org.spongepowered.asm.mixin.Final;
@@ -29,17 +30,17 @@ import java.util.HashMap;
 public abstract class BlockStateModelLoaderMixin
 {
     @Accessor("STATIC_DEFINITIONS")
-    static Map<ResourceLocation, StateDefinition<Block, BlockState>> GetStaticDefinitions() { throw new Error("Implemented through Mixin"); }
+    static Map<Identifier, StateDefinition<Block, BlockState>> GetStaticDefinitions() { throw new Error("Implemented through Mixin"); }
 
     @Final
     @Mutable
     @Accessor("STATIC_DEFINITIONS")
-    static void SetStaticDefinitions(Map<ResourceLocation, StateDefinition<Block, BlockState>> map) { throw new Error("Implemented through Mixin"); }
+    static void SetStaticDefinitions(Map<Identifier, StateDefinition<Block, BlockState>> map) { throw new Error("Implemented through Mixin"); }
 
     @Inject(method = "<clinit>", at = @At(value = "TAIL"))
     private static void OnStaticInitEnd(CallbackInfo ci)
     {
-        HashMap<ResourceLocation, StateDefinition<Block, BlockState>> map = new HashMap<>(GetStaticDefinitions());
+        HashMap<Identifier, StateDefinition<Block, BlockState>> map = new HashMap<>(GetStaticDefinitions());
         EventManager.FireEventSafe(new ModStaticDefinitionsBuilder.Event(map::put));
         SetStaticDefinitions(map);
     }

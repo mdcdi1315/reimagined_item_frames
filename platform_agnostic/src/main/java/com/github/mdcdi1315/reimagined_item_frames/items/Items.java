@@ -7,7 +7,7 @@ import net.minecraft.world.item.Item;
 
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public final class Items
 {
@@ -49,7 +49,7 @@ public final class Items
         ));
     }
 
-    private static Item.Properties CreateProperties(ResourceLocation location)
+    private static Item.Properties CreateProperties(Identifier location)
     {
         return new Item.Properties()
                 .stacksTo(128)

@@ -7,9 +7,10 @@ import com.github.mdcdi1315.DotNetLayer.System.Diagnostics.CodeAnalysis.AllowNul
 import com.github.mdcdi1315.basemodslib.registries.RegistryUtils;
 
 import com.github.mdcdi1315.reimagined_item_frames.ServerModInstance;
-
 import com.github.mdcdi1315.reimagined_item_frames.entity.AbstractBaseItemFrameEntity;
+
 import net.minecraft.world.Container;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.SimpleContainer;
@@ -17,7 +18,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 
@@ -32,7 +32,7 @@ public abstract class AbstractItemFrameMenu
     public static final int RENDERED_ITEM_X_POINT = 202;
     public static final int TEX_X_SIZE = 384;
     public static final int TEX_Y_SIZE = 128, ACTUAL_TEX_Y_SIZE = 110;
-    public static final ResourceLocation MENU_TEXTURE = RegistryUtils.ConstructResourceLocation(ServerModInstance.MOD_ID, "textures/gui/item_frame_menu_bgd.png");
+    public static final Identifier MENU_TEXTURE = RegistryUtils.ConstructResourceLocation(ServerModInstance.MOD_ID, "textures/gui/item_frame_menu_bgd.png");
 
     protected Integer client_entity_id;
     private final SimpleContainer container;

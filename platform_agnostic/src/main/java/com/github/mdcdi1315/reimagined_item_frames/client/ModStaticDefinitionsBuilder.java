@@ -8,9 +8,9 @@ import com.github.mdcdi1315.basemodslib.eventapi.IDestroyedOnUseEvent;
 
 import com.github.mdcdi1315.reimagined_item_frames.ServerModInstance;
 
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -19,7 +19,7 @@ public final class ModStaticDefinitionsBuilder
 {
     private ModStaticDefinitionsBuilder() {}
 
-    public record Event(Action2<ResourceLocation, StateDefinition<Block, BlockState>> register) implements IDestroyedOnUseEvent { }
+    public record Event(Action2<Identifier, StateDefinition<Block, BlockState>> register) implements IDestroyedOnUseEvent { }
 
     public static void Initialize(EventManager manager)
     {

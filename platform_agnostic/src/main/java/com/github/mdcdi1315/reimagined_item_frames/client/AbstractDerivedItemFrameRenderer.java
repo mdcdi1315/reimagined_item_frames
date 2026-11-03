@@ -9,9 +9,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MapRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.item.ItemModelResolver;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.item.ItemModelResolver;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -37,13 +38,13 @@ public abstract class AbstractDerivedItemFrameRenderer<TE extends AbstractBaseIt
     }
 
     @Override
-    public final void render(TState render_state, PoseStack pose_stack, MultiBufferSource buffer_source, int packed_light)
+    public final void submit(TState render_state, PoseStack pose_stack, SubmitNodeCollector collector, CameraRenderState camera)
     {
-        super.render(render_state, pose_stack, buffer_source, packed_light);
+        super.submit(render_state, pose_stack, collector, camera);
         pose_stack.pushPose(); // POSE PUSH UNSAFE BEGIN
         try {
             SetupFrameRendering(render_state, pose_stack);
-            RenderAdditional(render_state, pose_stack, buffer_source, packed_light);
+            RenderAdditional(render_state, pose_stack, collector);
         } finally {
             pose_stack.popPose(); // POSE PUSH UNSAFE END
         }
@@ -71,7 +72,7 @@ public abstract class AbstractDerivedItemFrameRenderer<TE extends AbstractBaseIt
         }
     }
 
-    protected abstract void RenderAdditional(TState state, PoseStack pose_stack, MultiBufferSource buffer, int packed_light);
+    protected abstract void RenderAdditional(TState state, PoseStack pose_stack, SubmitNodeCollector collector);
 
     protected final void SetupFrameRendering(TState state, PoseStack pose_stack)
     {
@@ -100,22 +101,21 @@ public abstract class AbstractDerivedItemFrameRenderer<TE extends AbstractBaseIt
             RIFRenderState state,
             float display_scale,
             PoseStack pose_stack,
-            MultiBufferSource buffer,
-            int packed_light
+            SubmitNodeCollector collector
     ) {
         if (state.item.isEmpty()) { return; }
         pose_stack.translate(0.0F, 0.0F, 0.5F);
         if (state.map_id == null) {
             pose_stack.mulPose(Axis.ZP.rotationDegrees(state.rotation));
             pose_stack.scale(display_scale, display_scale, display_scale);
-            state.item.render(pose_stack, buffer, packed_light, OverlayTexture.NO_OVERLAY);
+            state.item.submit(pose_stack, collector, state.lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor);
         } else {
             pose_stack.mulPose(Axis.ZP.rotationDegrees(180.0F));
             display_scale *= 0.0078125F;
             pose_stack.scale(display_scale, display_scale, display_scale);
             pose_stack.translate(-64.0F, -64.0F, -1.0F);
             // pose_stack.translate(0.0F, 0.0F, -1.0F);
-            map_renderer.render(state.map_render_state, pose_stack, buffer, true, packed_light);
+            map_renderer.render(state.map_render_state, pose_stack, collector, true, state.lightCoords);
         }
     }
 

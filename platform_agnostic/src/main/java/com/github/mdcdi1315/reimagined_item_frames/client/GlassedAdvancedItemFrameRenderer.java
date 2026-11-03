@@ -5,11 +5,12 @@ import com.github.mdcdi1315.reimagined_item_frames.entity.GlassedAdvancedItemFra
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.core.BlockPos;
+
 import net.minecraft.world.level.block.Block;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 
 public final class GlassedAdvancedItemFrameRenderer
@@ -21,11 +22,11 @@ public final class GlassedAdvancedItemFrameRenderer
     protected int getBlockLightLevel(GlassedAdvancedItemFrameEntity entity, BlockPos pos) { return entity.GetDesiredLightLevel(); }
 
     @Override
-    protected void RenderAdditional(RIFAdvancedRenderState state, PoseStack pose_stack, MultiBufferSource buffer, int packed_light)
+    protected void RenderAdditional(RIFAdvancedRenderState state, PoseStack pose_stack, SubmitNodeCollector collector)
     {
-        RenderFrame(state, pose_stack, buffer.getBuffer(RenderType.translucent()), packed_light);
+        RenderFrame(state, pose_stack, collector);
 
-        RenderItem(state, state.item_display_scale / 100f, pose_stack, buffer, packed_light);
+        RenderItem(state, state.item_display_scale / 100f, pose_stack, collector);
     }
 
     @Override
