@@ -36,10 +36,7 @@ public abstract class AbstractDerivedItemFrameItem
             Level level = context.getLevel();
             AbstractBaseItemFrameEntity entity = ConstructEntityInstance(level, blockpos, direction);
 
-            CustomData customdata = itemstack.getOrDefault(DataComponents.ENTITY_DATA, CustomData.EMPTY);
-            if (!customdata.isEmpty()) {
-                EntityType.updateCustomEntityTag(level, player, entity, customdata);
-            }
+            EntityType.createDefaultStackConfig(level, itemstack, player).accept(entity);
 
             if (entity.survives()) {
                 if (!level.isClientSide) {
@@ -49,7 +46,7 @@ public abstract class AbstractDerivedItemFrameItem
                 }
 
                 itemstack.shrink(1);
-                return InteractionResult.sidedSuccess(level.isClientSide);
+                return InteractionResult.SUCCESS;
             } else {
                 return InteractionResult.CONSUME;
             }

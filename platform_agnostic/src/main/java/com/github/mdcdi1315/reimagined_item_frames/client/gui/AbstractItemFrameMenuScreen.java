@@ -4,6 +4,7 @@ import com.github.mdcdi1315.reimagined_item_frames.menu.AbstractItemFrameMenu;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 
@@ -44,7 +45,18 @@ public abstract class AbstractItemFrameMenuScreen<T extends AbstractItemFrameMen
     @Override
     protected void renderBg(GuiGraphics gc, float partial_tick, int mouse_x, int mouse_y)
     {
-        gc.blit(AbstractItemFrameMenu.MENU_TEXTURE, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight, AbstractItemFrameMenu.TEX_X_SIZE, AbstractItemFrameMenu.TEX_Y_SIZE);
+        gc.blit(
+                RenderType::guiTextured,
+                AbstractItemFrameMenu.MENU_TEXTURE,
+                leftPos,
+                topPos,
+                0,
+                0,
+                this.imageWidth,
+                this.imageHeight,
+                AbstractItemFrameMenu.TEX_X_SIZE,
+                AbstractItemFrameMenu.TEX_Y_SIZE
+        );
     }
 
     @Override

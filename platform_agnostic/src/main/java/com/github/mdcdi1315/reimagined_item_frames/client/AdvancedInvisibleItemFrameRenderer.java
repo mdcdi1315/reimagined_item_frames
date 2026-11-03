@@ -15,15 +15,25 @@ import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 
 public final class AdvancedInvisibleItemFrameRenderer
-    extends AbstractDerivedItemFrameRenderer<AdvancedInvisibleItemFrameEntity>
+    extends AbstractDerivedItemFrameRenderer<AdvancedInvisibleItemFrameEntity, RIFAdvancedRenderState>
 {
     public AdvancedInvisibleItemFrameRenderer(EntityRendererProvider.Context context) { super(context); }
 
     @Override
-    protected void RenderAdditional(AdvancedInvisibleItemFrameEntity entity, float entity_yaw, float partial_ticks, PoseStack pose_stack, MultiBufferSource buffer, int packed_light)
+    protected void RenderAdditional(RIFAdvancedRenderState state, PoseStack pose_stack, MultiBufferSource buffer, int packed_light)
     {
-        RenderItem(entity, entity.GetItemDisplayScale() / 100f, pose_stack, buffer, packed_light);
+        RenderItem(state, state.item_display_scale / 100f, pose_stack, buffer, packed_light);
     }
+
+    @Override
+    public void extractRenderState(AdvancedInvisibleItemFrameEntity entity, RIFAdvancedRenderState state, float partial_ticks)
+    {
+        super.extractRenderState(entity, state, partial_ticks);
+        state.item_display_scale = entity.GetItemDisplayScale();
+    }
+
+    @Override
+    public RIFAdvancedRenderState createRenderState() { return new RIFAdvancedRenderState(); }
 
     @Override
     protected int getBlockLightLevel(AdvancedInvisibleItemFrameEntity entity, BlockPos pos) { return entity.GetDesiredLightLevel(); }

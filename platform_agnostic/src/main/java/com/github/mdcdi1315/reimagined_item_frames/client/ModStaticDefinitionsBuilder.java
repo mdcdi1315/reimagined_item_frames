@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 public final class ModStaticDefinitionsBuilder
 {
@@ -26,24 +27,35 @@ public final class ModStaticDefinitionsBuilder
         manager.AddEventListener(Event.class, ModStaticDefinitionsBuilder::InitializeDefinitions);
     }
 
+    public static StateDefinition<Block, BlockState> CreateFakeDefinition()
+    {
+        return new StateDefinition.Builder<Block, BlockState>(Blocks.AIR)
+                .add(BlockStateProperties.MAP)
+                .create(Block::defaultBlockState, BlockState::new);
+    }
+
+    public static StateDefinition<Block, BlockState> SIMPLE_ITEM_FRAME_FAKE_DEF;
+    public static StateDefinition<Block, BlockState> ADVANCED_ITEM_FRAME_FAKE_DEF;
+    public static StateDefinition<Block, BlockState> GLASSED_SIMPLE_ITEM_FRAME_FAKE_DEF;
+    public static StateDefinition<Block, BlockState> GLASSED_ADVANCED_ITEM_FRAME_FAKE_DEF;
+
     private static void InitializeDefinitions(Event register)
     {
-        StateDefinition<Block, BlockState> definition = new StateDefinition.Builder<Block, BlockState>(Blocks.AIR).create(Block::defaultBlockState, BlockState::new);
         register.register.action(
                 RegistryUtils.ConstructResourceLocation(ServerModInstance.MOD_ID, "simple_item_frame"),
-                definition
+                SIMPLE_ITEM_FRAME_FAKE_DEF = CreateFakeDefinition()
         );
         register.register.action(
                 RegistryUtils.ConstructResourceLocation(ServerModInstance.MOD_ID, "advanced_item_frame"),
-                definition
+                ADVANCED_ITEM_FRAME_FAKE_DEF = CreateFakeDefinition()
         );
         register.register.action(
                 RegistryUtils.ConstructResourceLocation(ServerModInstance.MOD_ID, "glassed_simple_item_frame"),
-                definition
+                GLASSED_SIMPLE_ITEM_FRAME_FAKE_DEF = CreateFakeDefinition()
         );
         register.register.action(
                 RegistryUtils.ConstructResourceLocation(ServerModInstance.MOD_ID, "glassed_advanced_item_frame"),
-                definition
+                GLASSED_ADVANCED_ITEM_FRAME_FAKE_DEF = CreateFakeDefinition()
         );
         ServerModInstance.LOGGER.info("Successfully initialized static definitions for the custom item frames!");
     }

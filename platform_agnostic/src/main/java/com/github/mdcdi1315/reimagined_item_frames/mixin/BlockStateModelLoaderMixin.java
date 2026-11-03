@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.client.resources.model.BlockStateModelLoader;
+import net.minecraft.client.resources.model.BlockStateDefinitions;
 
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,8 +22,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Map;
 import java.util.HashMap;
 
+// In the 1.21.1 version, this was in the BlockStateModelLoader class,
+// so it has kept the name due to that.
 @ClientOnlyEnvironment
-@Mixin(BlockStateModelLoader.class)
+@Mixin(BlockStateDefinitions.class)
 public abstract class BlockStateModelLoaderMixin
 {
     @Accessor("STATIC_DEFINITIONS")

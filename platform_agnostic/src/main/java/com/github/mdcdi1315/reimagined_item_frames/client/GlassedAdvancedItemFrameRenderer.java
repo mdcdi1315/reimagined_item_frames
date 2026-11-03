@@ -1,47 +1,43 @@
 package com.github.mdcdi1315.reimagined_item_frames.client;
 
-import com.github.mdcdi1315.DotNetLayer.System.StringUtils;
-
-import com.github.mdcdi1315.basemodslib.registries.RegistryUtils;
-
-import com.github.mdcdi1315.reimagined_item_frames.ServerModInstance;
 import com.github.mdcdi1315.reimagined_item_frames.entity.GlassedAdvancedItemFrameEntity;
 
-import com.mojang.math.Axis;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.item.MapItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.client.renderer.Sheets;
-import net.minecraft.world.level.saveddata.maps.MapId;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.resources.model.ModelManager;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.block.BlockRenderDispatcher;
-import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
-import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 
 public final class GlassedAdvancedItemFrameRenderer
-        extends AbstractNonInvisibleItemFrameRenderer<GlassedAdvancedItemFrameEntity>
+        extends AbstractFramedItemFrameRenderer<GlassedAdvancedItemFrameEntity, RIFAdvancedRenderState>
 {
-    public static final ModelResourceLocation TEX_LOCATION = new ModelResourceLocation(
-            RegistryUtils.ConstructResourceLocation(ServerModInstance.MOD_ID, "glassed_advanced_item_frame"),
-            StringUtils.Empty
-    );
-
     public GlassedAdvancedItemFrameRenderer(EntityRendererProvider.Context context) { super(context); }
 
     @Override
     protected int getBlockLightLevel(GlassedAdvancedItemFrameEntity entity, BlockPos pos) { return entity.GetDesiredLightLevel(); }
 
     @Override
-    protected void RenderAdditional(GlassedAdvancedItemFrameEntity entity, float entity_yaw, float partial_ticks, PoseStack pose_stack, MultiBufferSource buffer, int packed_light)
+    protected void RenderAdditional(RIFAdvancedRenderState state, PoseStack pose_stack, MultiBufferSource buffer, int packed_light)
     {
-        RenderFrame(pose_stack, buffer.getBuffer(Sheets.translucentCullBlockSheet()), dispatcher, TEX_LOCATION, packed_light);
+        RenderFrame(state, pose_stack, buffer.getBuffer(RenderType.translucent()), packed_light);
 
-        RenderItem(entity, entity.GetItemDisplayScale() / 100f, pose_stack, buffer, packed_light);
+        RenderItem(state, state.item_display_scale / 100f, pose_stack, buffer, packed_light);
     }
+
+    @Override
+    public void extractRenderState(GlassedAdvancedItemFrameEntity entity, RIFAdvancedRenderState state, float partial_ticks)
+    {
+        super.extractRenderState(entity, state, partial_ticks);
+        state.item_display_scale = entity.GetItemDisplayScale();
+    }
+
+    @Override
+    public RIFAdvancedRenderState createRenderState() { return new RIFAdvancedRenderState(); }
+
+    @Override
+    public StateDefinition<Block, BlockState> GetFakeDefinition() { return ModStaticDefinitionsBuilder.GLASSED_ADVANCED_ITEM_FRAME_FAKE_DEF; }
 }

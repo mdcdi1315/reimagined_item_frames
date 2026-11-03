@@ -2,15 +2,9 @@
 	"type": "minecraft:crafting_shapeless",
 	"category": "misc",
 	"ingredients": [
-		{
-			"item": "reimagined_item_frames:advanced_item_frame"
-		},
-		{
-			"item": "minecraft:diamond"
-		},
-		{
-			"item": "minecraft:diamond"
-		}
+		"reimagined_item_frames:advanced_item_frame",
+		"minecraft:diamond",
+		"minecraft:diamond"
 	],
 	"result": {
 		"count": 1,

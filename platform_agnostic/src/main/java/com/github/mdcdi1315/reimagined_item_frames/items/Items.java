@@ -5,6 +5,10 @@ import com.github.mdcdi1315.basemodslib.item.ItemRegistrationInformation;
 
 import net.minecraft.world.item.Item;
 
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
+
 public final class Items
 {
     private Items() {}
@@ -20,30 +24,35 @@ public final class Items
     {
         CreativeModeTabs.Initialize(registrar);
         registrar.Register("simple_item_frame", new ItemRegistrationInformation(
-                (rl) -> SIMPLE_ITEM_FRAME = new SimpleItemFrameItem(CreateProperties()),
+                (rl) -> SIMPLE_ITEM_FRAME = new SimpleItemFrameItem(CreateProperties(rl)),
                 CreativeModeTabs.REIMAGINED_ITEM_FRAMES
         ));
         registrar.Register("simple_invisible_item_frame", new ItemRegistrationInformation(
-                (rl) -> SIMPLE_INVISIBLE_ITEM_FRAME = new SimpleInvisibleItemFrameItem(CreateProperties()),
+                (rl) -> SIMPLE_INVISIBLE_ITEM_FRAME = new SimpleInvisibleItemFrameItem(CreateProperties(rl)),
                 CreativeModeTabs.REIMAGINED_ITEM_FRAMES
         ));
         registrar.Register("glassed_simple_item_frame", new ItemRegistrationInformation(
-                (rl) -> GLASSED_SIMPLE_ITEM_FRAME = new GlassedSimpleItemFrameItem(CreateProperties()),
+                (rl) -> GLASSED_SIMPLE_ITEM_FRAME = new GlassedSimpleItemFrameItem(CreateProperties(rl)),
                 CreativeModeTabs.REIMAGINED_ITEM_FRAMES
         ));
         registrar.Register("advanced_item_frame", new ItemRegistrationInformation(
-                (rl) -> ADVANCED_ITEM_FRAME = new AdvancedItemFrameItem(CreateProperties()),
+                (rl) -> ADVANCED_ITEM_FRAME = new AdvancedItemFrameItem(CreateProperties(rl)),
                 CreativeModeTabs.REIMAGINED_ITEM_FRAMES
         ));
         registrar.Register("advanced_invisible_item_frame", new ItemRegistrationInformation(
-                (rl) -> ADVANCED_INVISIBLE_ITEM_FRAME = new AdvancedInvisibleItemFrameItem(CreateProperties()),
+                (rl) -> ADVANCED_INVISIBLE_ITEM_FRAME = new AdvancedInvisibleItemFrameItem(CreateProperties(rl)),
                 CreativeModeTabs.REIMAGINED_ITEM_FRAMES
         ));
         registrar.Register("glassed_advanced_item_frame", new ItemRegistrationInformation(
-                (rl) -> GLASSED_ADVANCED_ITEM_FRAME = new GlassedAdvancedItemFrameItem(CreateProperties()),
+                (rl) -> GLASSED_ADVANCED_ITEM_FRAME = new GlassedAdvancedItemFrameItem(CreateProperties(rl)),
                 CreativeModeTabs.REIMAGINED_ITEM_FRAMES
         ));
     }
 
-    private static Item.Properties CreateProperties() { return new Item.Properties().stacksTo(128); }
+    private static Item.Properties CreateProperties(ResourceLocation location)
+    {
+        return new Item.Properties()
+                .stacksTo(128)
+                .setId(ResourceKey.create(Registries.ITEM, location));
+    }
 }

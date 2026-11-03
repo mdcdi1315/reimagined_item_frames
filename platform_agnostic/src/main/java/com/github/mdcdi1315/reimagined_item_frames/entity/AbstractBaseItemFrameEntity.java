@@ -93,10 +93,7 @@ public abstract class AbstractBaseItemFrameEntity
 
     public void addAdditionalSaveData(CompoundTag compound)
     {
-        BlockPos blockpos = this.getPos();
-        compound.putInt("TileX", blockpos.getX());
-        compound.putInt("TileY", blockpos.getY());
-        compound.putInt("TileZ", blockpos.getZ());
+        compound.store("block_pos", BlockPos.CODEC, this.getPos());
 
         var i = getItem();
         if (!i.isEmpty()) {
@@ -112,11 +109,11 @@ public abstract class AbstractBaseItemFrameEntity
 
     public void readAdditionalSaveData(CompoundTag compound)
     {
-        BlockPos blockpos = new BlockPos(compound.getInt("TileX"), compound.getInt("TileY"), compound.getInt("TileZ"));
-        if (!blockpos.closerThan(this.blockPosition(), 16.0)) {
-            ServerModInstance.LOGGER.error("Block-attached entity at invalid position: {}", blockpos);
-        } else {
+        BlockPos blockpos = compound.read("block_pos", BlockPos.CODEC).orElse(null);
+        if (blockpos != null && blockpos.closerThan(this.blockPosition(), 16.0)) {
             this.pos = blockpos;
+        } else {
+            ServerModInstance.LOGGER.error("Block-attached entity at invalid position: {}", blockpos == null ? BlockPos.ZERO : blockpos);
         }
 
         ItemStack itemstack;
@@ -134,15 +131,15 @@ public abstract class AbstractBaseItemFrameEntity
 
         this.setItem(itemstack, false);
         if (!itemstack.isEmpty()) {
-            this.SetRotation(compound.getShort("item_rot"), false);
+            this.SetRotation(compound.getShort("item_rot").orElse((short)0), false);
             Optional<Float> f = NBTUtils.GetFloat(compound, "item_dc");
             if (f.isPresent()) {
                 ((ItemFrameDataAccessor)this).SetDropChance(f.get());
             }
         }
 
-        this.setDirection(Direction.from3DDataValue(compound.getByte("facing")));
-        this.setInvisible(compound.getBoolean("invisible"));
-        ((ItemFrameDataAccessor)this).SetFixed(compound.getBoolean("fixed"));
+        this.setDirection(Direction.from3DDataValue(compound.getByte("facing").orElse((byte)0)));
+        this.setInvisible(compound.getBooleanOr("invisible", false));
+        ((ItemFrameDataAccessor)this).SetFixed(compound.getBooleanOr("fixed", false));
     }
 }
